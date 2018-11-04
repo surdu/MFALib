@@ -1,5 +1,4 @@
-#include "MFALib.h"
-#include <Arduino.h>
+#include "MFA.h"
 
 // #define ENABLE_IRQ 1
 // #define DEBUG_MEM 1
@@ -113,8 +112,7 @@ void MFA::GraphicOut(uint8_t x, uint8_t y, uint16_t size, uint8_t data[]) {
 	sendRawMsg(tx_array);
 }
 
-//fisWriter.GraphicFromArray(0,70,64,16,QBSW,1);
-void MFA::GraphicFromArray(uint8_t x, uint8_t y, uint8_t sizex, uint8_t sizey, uint8_t data[]) {
+void MFA::drawImage(uint8_t x, uint8_t y, uint8_t sizex, uint8_t sizey, uint8_t data[]) {
 	// 22x32bytes = 704
 	uint8_t packet_size = (sizex + 7) / 8; // how much byte per packet
 

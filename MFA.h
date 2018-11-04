@@ -29,8 +29,8 @@ class MFA
 		void remove_graphic();
 		void printText(int x, int y, String line);
 
-		void GraphicFromArray(uint8_t x, uint8_t y, uint8_t sizex, uint8_t sizey, uint8_t data[]);
 		void GraphicOut(uint8_t x, uint8_t y, uint16_t size, uint8_t data[]);
+		void drawImage(uint8_t x, uint8_t y, uint8_t sizex, uint8_t sizey, uint8_t data[]);
 
 		void setRadioText(String line1, String line2, int center = 3);
 		void sendMsg(char msg[]);
