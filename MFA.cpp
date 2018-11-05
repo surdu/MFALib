@@ -1,7 +1,6 @@
 #include "MFA.h"
 
 // #define ENABLE_IRQ 1
-// #define DEBUG_MEM 1
 
 //   Constructor
 MFA::MFA(uint8_t clkPin, uint8_t dataPin, uint8_t enaPin)
@@ -107,14 +106,13 @@ void MFA::GraphicOut(uint8_t x, uint8_t y, uint16_t size, uint8_t data[]) {
 	for (uint16_t a = 0; a < size; a++) {
 		tx_array[a + 5] = data[a];
 	}
-	Serial.println(size);
+
 	tx_array[size+5] = (char)checksum((uint8_t*)tx_array);
 	sendRawMsg(tx_array);
 }
 
 void MFA::drawImage(uint8_t x, uint8_t y, uint8_t sizex, uint8_t sizey, uint8_t data[]) {
-	// 22x32bytes = 704
-	uint8_t packet_size = (sizex + 7) / 8; // how much byte per packet
+	uint8_t packet_size = (sizex + 7) / 8;
 
 	for (uint8_t line = 0; line < sizey; line++) {
 		uint8_t _data[packet_size];
@@ -142,6 +140,9 @@ void MFA::init_graphic() {
 
 	tx_array[7] = (char)checksum((uint8_t*)tx_array);
 	sendRawMsg(tx_array);
+	// without the delay, drawing imediatly after this
+	// will miss the first line
+	delay(2);
 }
 
 void MFA::remove_graphic() {
@@ -268,11 +269,6 @@ void MFA::sendEnablePulse() {
 	FIS_WRITE_stopENA();
 	delayMicroseconds(37);
 } // sendEnablePulse
-
-void MFA::printFreeMem() {
-	//Serial.print(F("FIS:freeMemory()="));
-	////Serial.println(freeMemory());
-}
 
 // Send byte out on 3LB port to instrument cluster
 void MFA::FIS_WRITE_3LB_sendByte(int in_byte) {
