@@ -57,5 +57,4 @@ class MFA
 		void setDataLow();
 		uint8_t checksum( volatile uint8_t in_msg[]);
 };
-
 #endif
